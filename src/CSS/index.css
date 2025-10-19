@@ -11,7 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* global background for all pages (served from public/Background.png) */
-  background-image: url('//Users/kylemcwilliams/WebstormProjects/cloud_control/public/Background.png');
+  background-image: url('/Users/kylemcwilliams/WebstormProjects/cloud_control/public/Background.png');
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
