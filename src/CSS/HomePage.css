@@ -1,0 +1,143 @@
+/* filepath: src/CSS/HomePage.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
+:root{
+  --bg: #efede7;
+  --black: #000000;
+  --accent: #f4c542;
+}
+
+/* full-viewport landing container using the Background.png from public/ */
+.home-container{
+  position:relative;
+  min-height:100vh;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  /* background is moved to global index.css so every page shares it */
+  background: transparent;
+  font-family: 'Poppins', 'Helvetica', 'Arial', sans-serif;
+  overflow:hidden;
+}
+
+/* Very large title across the top like the screenshot */
+.home-title{
+  position:absolute;
+  top:2vh; /* bring even closer to top */
+  left:50%;
+  transform: translateX(-50%);
+  margin:0;
+  color: var(--black);
+  font-weight:700;
+  /* scale responsively - slightly larger max */
+  font-size: clamp(72px, 13vw, 220px);
+  letter-spacing: 6px;
+  pointer-events:none;
+  z-index:6;
+}
+
+/* central vertical stack for the two pill buttons */
+.home-actions{
+  display:flex;
+  flex-direction:column;
+  gap:6rem;
+  align-items:center;
+  z-index:6; /* above the background */
+  padding-top: 22vh; /* push down into the center area over the image */
+}
+
+/* pill button that matches screenshot */
+.home-button{
+  display:inline-block;
+  background: var(--black);
+  color: #fff;
+  text-decoration: none;
+  padding: 1.2rem 6rem;
+  border-radius: 999px;
+  font-size: clamp(24px, 3.2vw, 44px);
+  font-weight:800;
+  box-shadow: 0 12px 0 rgba(0,0,0,0.5);
+  border: 6px solid rgba(0,0,0,0.95);
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  /* subtle inner highlight like the screenshot's glossy top */
+  box-shadow: 0 12px 0 rgba(0,0,0,0.5), inset 0 -8px 0 rgba(255,255,255,0.03);
+  text-shadow: 0 2px 0 rgba(0,0,0,0.35);
+}
+
+/* clouds layer */
+.clouds{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+}
+
+.cloud{
+  position:absolute;
+  background:var(--cloud-fill);
+  border:10px solid var(--cloud-stroke);
+  border-radius:60px;
+  box-sizing:border-box;
+}
+
+/* Individual cloud sizes/positions */
+.c1{ width:700px; height:220px; left:-100px; top:55vh; border-radius:120px; }
+.c2{ width:420px; height:160px; left:18%; top:45vh; border-radius:100px; }
+.c3{ width:1100px; height:320px; right:-140px; top:8vh; border-radius:180px; }
+.c4{ width:260px; height:100px; left:60%; top:68vh; border-radius:80px; }
+.c5{ width:180px; height:70px; right:22%; top:26vh; border-radius:70px; }
+
+/* add little scallops to clouds to approximate cartoon shapes */
+.c1::after, .c2::after, .c3::after, .c4::after, .c5::after{
+  content:"";
+  position:absolute;
+  background:var(--cloud-fill);
+  border:10px solid var(--cloud-stroke);
+  border-radius:50%;
+}
+.c1::after{ width:180px; height:120px; left:220px; top:-60px; }
+.c2::after{ width:120px; height:90px; left:30px; top:-40px; }
+.c3::after{ width:240px; height:170px; left:420px; top:-80px; }
+.c4::after{ width:100px; height:70px; left:120px; top:-30px; }
+.c5::after{ width:80px; height:60px; left:60px; top:-24px; }
+
+/* Yellow connector lines using pseudo-elements positioned from clouds */
+.c1::before, .c2::before, .c3::before, .c4::before, .c5::before{
+  content:"";
+  position:absolute;
+  height:4px;
+  background:var(--accent);
+  z-index:0;
+}
+/* a few example connectors */
+.c1::before{ width:520px; left:680px; top:30px; transform:rotate(-10deg); }
+.c2::before{ width:360px; left:360px; top:70px; transform:rotate(-6deg); }
+.c3::before{ width:420px; right:430px; top:160px; transform:rotate(0deg); }
+.c4::before{ width:260px; left:-240px; top:34px; transform:rotate(-18deg); }
+.c5::before{ width:220px; left:-220px; top:30px; transform:rotate(14deg); }
+
+/* make sure the clouds sit behind main content */
+.cloud, .cloud::before, .cloud::after{ z-index:2; }
+.clouds{ z-index:2; }
+
+/* bring buttons and title above clouds */
+.home-title, .home-actions{ z-index:6; }
+
+/* Responsive tweaks */
+@media (max-width:900px){
+  .home-title{ font-size:4.6rem; top:6vh; }
+  .home-actions{ gap:3rem; }
+  .home-button{ padding:0.9rem 3.6rem; font-size: clamp(18px, 4.2vw, 30px); }
+  .c3{ display:none; }
+}
+
+@media (max-width:480px){
+  .home-title{ font-size:3rem; }
+  .home-actions{ gap:1.6rem; }
+  .home-button{ padding:0.6rem 2.4rem; font-size: 18px; }
+  .c1, .c2, .c4, .c5{ display:none; }
+}
