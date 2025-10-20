@@ -1,4 +1,3 @@
-/* ...existing code... */
 
 .login-page {
   display: flex;
@@ -85,4 +84,82 @@
   }
 }
 
-/* ...existing code... */
+/* File: src/CSS/LoginSignup.css (append or merge with existing file) */
+
+/* Small adjustments for the extra pills and MFA panel */
+.pill-button.secondary {
+    background: rgba(0,0,0,0.85);
+    opacity: 0.95;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.12) inset;
+}
+
+.pill-button.mfa-toggle {
+    background: #111;
+}
+
+/* MFA panel styling */
+.mfa-panel {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    width: 100%;
+}
+
+.mfa-options {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mfa-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #000;
+    background: rgba(255,255,255,0.9);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.mfa-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    align-items: center;
+}
+
+.mfa-input {
+    background: #000;
+    color: #fff;
+    width: min(520px, 46vw);
+    max-width: 520px;
+    padding: 14px 40px;
+    font-size: clamp(16px, 3.5vw, 20px);
+}
+
+/* Keep consistent spacing for MFA save */
+.mfa-actions {
+    margin-top: 0.25rem;
+}
+
+/* Responsive tweaks - ensure pills and MFA inputs remain usable on small screens */
+@media (max-width: 520px) {
+    .mfa-options {
+        gap: 0.5rem;
+    }
+    .mfa-option {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+    .mfa-input {
+        width: calc(100% - 48px);
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+}

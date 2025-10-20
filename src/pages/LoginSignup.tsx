@@ -57,6 +57,14 @@ const LoginSignup: React.FC = () => {
           autoComplete="new-password"
         />
 
+          <button
+              className="pill-input"
+              type="button"
+              onClick={() => { window.location.href = '/mfa'; }}
+          >
+              Enable MFA
+          </button>
+
         <button className="pill-button" type="submit">Submit</button>
       </form>
     </main>

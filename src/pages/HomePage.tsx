@@ -10,6 +10,8 @@ const HomePage: React.FC = () => {
             <div className="home-actions">
                 <Link to="/login" className="home-button">Login</Link>
                 <Link to="/loginsignup?mode=register" className="home-button">Register</Link>
+                <Link to="/forgotpassword" className="home-button">Forgot Password</Link>
+
             </div>
         </main>
     );
