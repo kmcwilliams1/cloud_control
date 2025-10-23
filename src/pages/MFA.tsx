@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import '../CSS/LoginSignup.css';
+import '../CSS/Signup.css';
 
 const MFA: React.FC = () => {
     const [code, setCode] = useState('');
