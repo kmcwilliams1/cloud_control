@@ -1,0 +1,4 @@
+// email,password,role
+admin@email.com,admin,admin
+user@email.com,user,user
+guest@email.com,guest,guest
