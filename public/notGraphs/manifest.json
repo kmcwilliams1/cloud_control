@@ -4,30 +4,35 @@
     "name": "VISION.TXT",
     "file": "Screenshot (44).png",
     "type": "image",
+    "provider": "gcp",
     "folder": "notGraphs"
   },
   {
     "name": "SLC.TXT",
     "file": "Screenshot (44).png",
     "type": "image",
+    "provider": "gcp",
     "folder": "notGraphs"
   },
   {
     "name": "IMG_01",
     "file": "Screenshot (45)1.png",
     "type": "image",
+    "provider": "gcp",
     "folder": "notGraphs"
   },
   {
     "name": "IMG_02",
     "file": "Screenshot (45)1.png",
     "type": "image",
+    "provider": "gcp",
     "folder": "notGraphs"
   },
   {
     "name": "VID_01",
     "file": "vid_01.mp4",
     "type": "video",
+    "provider": "gcp",
     "folder": "notGraphs"
   }
 ]

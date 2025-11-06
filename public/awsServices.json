@@ -1,0 +1,99 @@
+{
+  "categories": [
+    {
+      "name": "Compute",
+      "services": [
+        "EC2",
+        "Lightsail",
+        "Lambda",
+        "Batch",
+        "Elastic Beanstalk",
+        "Serverless Application Repository",
+        "AWS Outposts",
+        "EC2 Image Builder",
+        "AWS App Runner",
+        "AWS SimSpace Weaver",
+        "EC2 Global View",
+        "Parallel Computing Service"
+      ]
+    },
+    {
+      "name": "Containers",
+      "services": [
+        "Elastic Container Service",
+        "Elastic Kubernetes Service",
+        "Red Hat OpenShift Service on AWS",
+        "Elastic Container Registry"
+      ]
+    },
+    {
+      "name": "Storage",
+      "services": [
+        "S3",
+        "EFS",
+        "FSx",
+        "S3 Glacier"
+      ]
+    },
+    {
+      "name": "Quantum Technologies",
+      "services": [
+        "Amazon Braket"
+      ]
+    },
+    {
+      "name": "Management & Governance",
+      "services": [
+        "AWS Organizations",
+        "CloudWatch",
+        "AWS Auto Scaling",
+        "CloudFormation",
+        "AWS Config",
+        "OpsWorks",
+        "Service Catalog",
+        "Systems Manager",
+        "Trusted Advisor",
+        "Control Tower",
+        "AWS Well-Architected Tool",
+        "Amazon Q Developer in chat applications (previously AWS Chatbot)",
+        "Launch Wizard",
+        "AWS Compute Optimizer",
+        "Resource Groups & Tag Editor",
+        "Amazon Grafana",
+        "Amazon Prometheus",
+        "AWS Resilience Hub",
+        "Incident Manager",
+        "AWS License Manager"
+      ]
+    },
+    {
+      "name": "Security, Identity, & Compliance",
+      "services": [
+        "Resource Access Manager",
+        "Cognito",
+        "Secrets Manager",
+        "GuardDuty",
+        "Amazon Inspector",
+        "Amazon Macie",
+        "IAM Identity Center",
+        "Certificate Manager",
+        "Key Management Service",
+        "CloudHSM",
+        "Directory Service",
+        "AWS Firewall Manager",
+        "AWS Artifact",
+        "Detective",
+        "AWS Signer",
+        "AWS Private Certificate Authority",
+        "Security Hub",
+        "AWS Audit Manager",
+        "Security Lake",
+        "WAF & Shield",
+        "Amazon Verified Permissions",
+        "AWS Payment Cryptography",
+        "AWS Security Incident Response",
+        "IAM"
+      ]
+    }
+  ]
+}

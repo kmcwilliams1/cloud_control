@@ -47,7 +47,7 @@ export default function UserHome() {
 
         <aside className="right-col">
           {shared.map(it => (
-            <div key={it.file} style={{ display: 'inline-block', margin: 16 }}>
+            <div key={it.file} style={{ width: 260, margin: '12px auto', display: 'block' }}>
               <ManifestItem item={it} />
             </div>
           ))}
