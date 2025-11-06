@@ -1,0 +1,168 @@
+
+/* File: src/styles/dashboard.css (CSS) */
+:root{
+    --bg: #efefe8;            /* page background */
+    --line: #cfcfc8;          /* separators */
+    --text: #222;             /* primary text */
+    --muted: #6b6b6b;
+    --accent-a: #6cecf0;      /* light cyan */
+    --accent-b: #4bb6e6;      /* blue */
+    --pill-start: #b3f0ff;
+    --pill-end: #d7a7ff;
+    --thumb-blue: #66b8f7;
+    --shadow: 0 8px 18px rgba(0,0,0,0.12);
+    font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* page shell */
+body { background: var(--bg); color: var(--text); margin: 0; }
+
+/* overall grid: three equal vertical panels */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    min-height: 720px;
+    border-top: 1px solid var(--line);
+    box-sizing: border-box;
+}
+
+/* vertical separators between columns */
+.dashboard-grid > .panel {
+    padding: 40px 36px;
+    border-right: 1px solid var(--line);
+    box-sizing: border-box;
+}
+.dashboard-grid > .panel:last-child { border-right: 0; }
+
+/* top centered summary header */
+.summary-title {
+    text-align: center;
+    font-size: 44px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    padding: 28px 0;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* provider header inside each panel */
+.provider-header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom: 18px;
+}
+.provider-title {
+    font-size: 34px;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+/* small hamburger icon placeholder */
+.provider-controls { font-size: 28px; color: var(--muted); }
+
+/* manifest / shared lists */
+.manifest-row {
+    display:flex;
+    gap: 28px;
+    flex-wrap:wrap;
+    align-items:center;
+    margin-top: 36px;
+}
+
+/* each manifest item */
+.manifest-item {
+    width: 160px;               /* total horizontal space */
+    text-align:center;
+    margin: 12px 8px;
+    cursor: pointer;
+}
+.manifest-thumb {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    display:inline-grid;
+    place-items:center;
+    box-shadow: var(--shadow);
+    background: linear-gradient(135deg,var(--thumb-blue), #79e1df);
+    overflow: hidden;
+    border: 6px solid rgba(255,255,255,0.12);
+}
+
+/* images inside thumb scale */
+.manifest-thumb img { max-width: 84%; max-height: 84%; display:block; }
+
+/* file-type icons fallback (circle with simple svg or text) */
+.manifest-thumb .icon {
+    width: 52%;
+    height: 52%;
+    display:block;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.12));
+}
+
+/* caption text under thumb */
+.manifest-caption {
+    display:block;
+    margin-top: 14px;
+    font-weight: 800;
+    color: #222;
+    letter-spacing: 5px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+/* pill dashboard button shown in center panels */
+.dashboard-pill {
+    display:inline-block;
+    margin: 34px auto 0;
+    padding: 16px 46px;
+    border-radius: 40px;
+    background: linear-gradient(90deg, var(--pill-start), var(--pill-end));
+    box-shadow: 0 10px 22px rgba(160,120,255,0.18), inset 0 -8px 18px rgba(0,0,0,0.06);
+    font-weight: 800;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #222;
+}
+
+
+
+.page {
+  background: var(--bg);
+  min-height: 100vh;
+  padding: 28px;
+  font-family: var(--font, "Helvetica Neue", Arial, sans-serif);
+  color: var(--text);
+}
+
+/* small loading state */
+.loading { padding: 28px; color: var(--muted); }
+
+/* user layout columns */
+.user-layout {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 24px;
+  align-items: start;
+  padding-top: 12px;
+}
+.left-col { padding: 12px; }
+.right-col { text-align: center; padding-top: 60px; }
+
+/* image sizing used by UserHome */
+.img-box {
+  width: 260px;
+  height: 220px;
+  object-fit: contain;
+  display: block;
+  margin: 24px auto;
+}
+
+/* small responsive tweaks */
+@media (max-width: 1100px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .provider-title { font-size: 28px; }
+    .manifest-item { width: 26%; min-width: 140px; }
+}

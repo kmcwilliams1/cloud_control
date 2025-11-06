@@ -1,0 +1,85 @@
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.brand {
+    margin: 0 0 0.5rem 0;
+    color: #000;
+    font-weight: 700;
+    /* very large heading like the screenshot but responsive */
+    font-size: clamp(72px, 12vw, 220px);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    pointer-events: none; /* decorative */
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: -2rem;
+    width: 100%;
+}
+
+.pill-input,
+.pill-button {
+    background: #000;
+    color: #fff;
+    border-radius: 999px;
+    border: none;
+    padding: 18px 64px;
+    width: min(520px, 46vw);
+    max-width: 520px;
+    font-size: clamp(18px, 3.5vw, 34px);
+    font-weight: 800;
+    text-align: center;
+    box-shadow: 0 6px 0 rgba(0,0,0,0.18) inset;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.pill-input::placeholder {
+    color: #fff;
+    opacity: 1;
+    font-weight: 800;
+    text-align: center;
+}
+
+.pill-input:focus {
+    outline: 3px solid rgba(255,255,255,0.06);
+    outline-offset: 4px;
+}
+
+.pill-button {
+    cursor: pointer;
+    padding: 20px 80px;
+    transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.pill-button:active {
+    transform: translateY(2px);
+}
+
+/* Smaller screens adjustments */
+@media (max-width: 520px) {
+    .brand {
+        font-size: clamp(48px, 16vw, 120px);
+    }
+    .pill-input, .pill-button {
+        width: calc(100% - 48px);
+        padding-left: 28px;
+        padding-right: 28px;
+        font-size: clamp(16px, 4.5vw, 22px);
+    }
+}

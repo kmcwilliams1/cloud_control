@@ -1,25 +1,9 @@
 :root {
-  --bg: #efede7;
+    --bg: #efede7;
 }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  /* global background for all pages (served from public/Background.png) */
-  background-image: url('/Users/kylemcwilliams/WebstormProjects/cloud_control/public/Background.png');
-  background-size: cover;
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-color: var(--bg);
-  min-height: 100vh;
-}
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }

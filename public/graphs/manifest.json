@@ -1,0 +1,33 @@
+[
+  {
+    "name": "EC2 Computation",
+    "file": "aws_donut.png",
+    "provider": "aws",
+    "folder": "graphs"
+  },
+  {
+    "name": "AWS Usage By Category",
+    "file": "aws_area.png",
+    "provider": "aws",
+    "folder": "graphs"
+  },
+  {
+    "name": "GCE Resources Remaining",
+    "file": "gcp_funnel.png",
+    "provider": "gcp",
+    "folder": "graphs"
+  },
+  {
+    "name": "Cloud Storage capacity",
+    "file": "gcp_line.png",
+    "provider": "gcp",
+    "folder": "graphs"
+  },
+  {
+    "name": "Virtual Machines by Quarter",
+    "file": "azure_bar.png",
+    "provider": "azure",
+    "folder": "graphs"
+  }
+]
+
