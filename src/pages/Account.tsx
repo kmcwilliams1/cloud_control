@@ -238,22 +238,142 @@ export default function Account(): JSX.Element {
             return <APIChart />;
         }
 
-        return (
-            <div>
-                <h2 style={{ marginTop: 0 }}>Account Info</h2>
-                <p>Profile, billing, and contact details.</p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 12 }}>
-                    <div style={{ padding: 12, background: '#fff', borderRadius: 8 }}>
-                        <div style={{ color: '#666', fontSize: 12 }}>Company</div>
-                        <div style={{ fontWeight: 700 }}>Acme Corp</div>
+return (
+    <div>
+        <h2 style={{ marginTop: 0 }}>Account Info</h2>
+        <p>Profile, billing, and contact details.</p>
+
+        {/* Interactive Edit Info Panel (self-contained nested component) */}
+        {(() => {
+            const EditInfoPanel: React.FC = () => {
+                const [editing, setEditing] = React.useState(false);
+                const [saving, setSaving] = React.useState(false);
+                const [message, setMessage] = React.useState<string | null>(null);
+
+                const [saved, setSaved] = React.useState({
+                    company: 'Acme Corp',
+                    email: 'admin@email.com',
+                    phone: '555-123-4567',
+                });
+
+                const [form, setForm] = React.useState({ ...saved });
+                const [errors, setErrors] = React.useState<{ email?: string }>({});
+
+                const validate = () => {
+                    const e: { email?: string } = {};
+                    if (!form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                        e.email = 'Enter a valid email address';
+                    }
+                    setErrors(e);
+                    return Object.keys(e).length === 0;
+                };
+
+                const handleChange = (k: keyof typeof form) => (ev: React.ChangeEvent<HTMLInputElement>) => {
+                    setForm((s) => ({ ...s, [k]: ev.target.value }));
+                };
+
+                const handleSave = () => {
+                    if (!validate()) return;
+                    setSaving(true);
+                    setMessage(null);
+                    // simulate network save
+                    setTimeout(() => {
+                        setSaved({ ...form });
+                        setSaving(false);
+                        setEditing(false);
+                        setMessage('Changes saved.');
+                        setTimeout(() => setMessage(null), 3000);
+                    }, 800);
+                };
+
+                const handleCancel = () => {
+                    setForm({ ...saved });
+                    setErrors({});
+                    setEditing(false);
+                    setMessage('Edits canceled.');
+                    setTimeout(() => setMessage(null), 2000);
+                };
+
+                return (
+                    <div style={{ marginTop: 12 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                            <div style={{ fontWeight: 700 }}>Profile</div>
+                            <div>
+                                {!editing ? (
+                                    <button
+                                        onClick={() => setEditing(true)}
+                                        style={{ padding: '8px 14px', borderRadius: 8, cursor: 'pointer', background: '#000', color: '#fff', fontWeight: 700 }}
+                                    >
+                                        Edit
+                                    </button>
+                                ) : (
+                                    <>
+                                        <button
+                                            onClick={handleSave}
+                                            disabled={saving}
+                                            style={{ padding: '8px 14px', borderRadius: 8, cursor: saving ? 'not-allowed' : 'pointer', background: '#0067b8', color: '#fff', marginRight: 8, fontWeight: 700 }}
+                                        >
+                                            {saving ? 'Saving…' : 'Save'}
+                                        </button>
+                                        <button
+                                            onClick={handleCancel}
+                                            disabled={saving}
+                                            style={{ padding: '8px 12px', borderRadius: 8, cursor: saving ? 'not-allowed' : 'pointer', background: 'transparent', border: '1px solid #ddd' }}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+
+                        {message && <div style={{ marginBottom: 12, color: '#006700', fontWeight: 700 }}>{message}</div>}
+
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                            <div style={{ padding: 12, background: '#fff', borderRadius: 8 }}>
+                                <label style={{ display: 'block', color: '#666', fontSize: 12 }}>Company</label>
+                                <input
+                                    value={form.company}
+                                    onChange={handleChange('company')}
+                                    disabled={!editing || saving}
+                                    style={{ width: '100%', padding: 10, marginTop: 6, borderRadius: 6, border: '1px solid #e6e6e6', fontSize: 14 }}
+                                    aria-label="Company"
+                                />
+                                <div style={{ marginTop: 8, color: '#999', fontSize: 12 }}>This appears on invoices and reports.</div>
+                            </div>
+
+                            <div style={{ padding: 12, background: '#fff', borderRadius: 8 }}>
+                                <label style={{ display: 'block', color: '#666', fontSize: 12 }}>Email</label>
+                                <input
+                                    value={form.email}
+                                    onChange={handleChange('email')}
+                                    disabled={!editing || saving}
+                                    style={{ width: '100%', padding: 10, marginTop: 6, borderRadius: 6, border: errors.email ? '1px solid crimson' : '1px solid #e6e6e6', fontSize: 14 }}
+                                    aria-label="Email"
+                                />
+                                {errors.email && <div style={{ color: 'crimson', marginTop: 6, fontSize: 12 }}>{errors.email}</div>}
+                            </div>
+
+                            <div style={{ padding: 12, background: '#fff', borderRadius: 8, gridColumn: '1 / -1' }}>
+                                <label style={{ display: 'block', color: '#666', fontSize: 12 }}>Phone</label>
+                                <input
+                                    value={form.phone}
+                                    onChange={handleChange('phone')}
+                                    disabled={!editing || saving}
+                                    style={{ width: '100%', padding: 10, marginTop: 6, borderRadius: 6, border: '1px solid #e6e6e6', fontSize: 14 }}
+                                    aria-label="Phone"
+                                />
+                                <div style={{ marginTop: 8, color: '#999', fontSize: 12 }}>Used for account recovery and support calls.</div>
+                            </div>
+                        </div>
                     </div>
-                    <div style={{ padding: 12, background: '#fff', borderRadius: 8 }}>
-                        <div style={{ color: '#666', fontSize: 12 }}>Email</div>
-                        <div style={{ fontWeight: 700 }}>admin@email.com</div>
-                    </div>
-                </div>
-            </div>
-        );
+                );
+            };
+
+            return <EditInfoPanel />;
+        })()}
+    </div>
+);
     };
 
     return (
