@@ -1,0 +1,49 @@
+
+[
+  {
+    "name": "EC2 Computation",
+    "file": "Screenshot (46)1.png",
+    "provider": "aws",
+    "folder": "graphs"
+  },
+  {
+    "name": "AWS Usage By Category",
+    "file": "Screenshot (46)4.png",
+    "provider": "aws",
+    "folder": "graphs",
+    "roles": ["admin"]
+  },
+  {
+    "name": "GCE Resources Remaining",
+    "file": "Screenshot (46)5.png",
+    "provider": "gcp",
+    "folder": "graphs"
+  },
+  {
+    "name": "Cloud Storage capacity",
+    "file": "Screenshot (46)7.png",
+    "provider": "gcp",
+    "folder": "graphs",
+    "roles": ["admin"]
+  },
+  {
+    "name": "Virtual Machines by Quarter",
+    "file": "Screenshot (46)3.png",
+    "provider": "azure",
+    "folder": "graphs"
+  },
+  {
+    "name": "Publicly Shared Clouds",
+    "file": "Screenshot (46)6.png",
+    "provider": "gcp",
+    "folder": "graphs",
+    "roles": ["admin"]
+  },
+  {
+    "name": "Virtual Machine Resource Provision",
+    "file": "Screenshot (46)2.png",
+    "provider": "azure",
+    "folder": "graphs"
+  }
+]
+

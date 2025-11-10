@@ -1,0 +1,83 @@
+{
+  "categories": [
+    {
+      "name": "Compute",
+      "services": [
+        "Azure Virtual Machines",
+        "Azure Kubernetes Service",
+        "App Service",
+        "Azure Functions",
+        "Azure Batch",
+        "Azure Dedicated Host",
+        "Azure Container Instances",
+        "Azure Spring Apps",
+        "Azure CycleCloud",
+        "Azure VMware Solution"
+      ]
+    },
+    {
+      "name": "Containers",
+      "services": [
+        "Azure Kubernetes Service",
+        "Azure Container Instances",
+        "Azure Red Hat OpenShift",
+        "Azure Container Registry"
+      ]
+    },
+    {
+      "name": "Storage",
+      "services": [
+        "Azure Blob Storage",
+        "Azure Files",
+        "Azure Disk Storage",
+        "Azure Archive Storage",
+        "Azure Storage Explorer",
+        "Azure NetApp Files"
+      ]
+    },
+    {
+      "name": "Quantum Technologies",
+      "services": [
+        "Azure Quantum"
+      ]
+    },
+    {
+      "name": "Management & Governance",
+      "services": [
+        "Azure Monitor",
+        "Azure Resource Manager",
+        "Azure Policy",
+        "Azure Automation",
+        "Azure Cost Management",
+        "Azure Advisor",
+        "Azure Blueprints",
+        "Azure Arc",
+        "Azure Lighthouse",
+        "Azure Service Health",
+        "Azure Resource Graph",
+        "Azure Managed Applications"
+      ]
+    },
+    {
+      "name": "Security, Identity, & Compliance",
+      "services": [
+        "Azure Active Directory",
+        "Microsoft Entra ID",
+        "Azure Key Vault",
+        "Azure Information Protection",
+        "Microsoft Defender for Cloud",
+        "Azure Firewall",
+        "Azure DDoS Protection",
+        "Azure Sentinel",
+        "Azure Confidential Ledger",
+        "Azure Role-Based Access Control",
+        "Azure Policy",
+        "Microsoft Purview",
+        "Azure Security Center",
+        "Azure Bastion",
+        "Azure Private Link",
+        "Azure Certificate Manager"
+      ]
+    }
+  ]
+}

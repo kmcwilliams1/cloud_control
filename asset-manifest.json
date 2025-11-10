@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/cloud_control/static/css/main.64b217e3.css",
+    "main.js": "/cloud_control/static/js/main.5ce2bd24.js",
+    "static/media/Background.png": "/cloud_control/static/media/Background.9fa2a96025b44a576d1e.png",
+    "index.html": "/cloud_control/index.html",
+    "main.64b217e3.css.map": "/cloud_control/static/css/main.64b217e3.css.map",
+    "main.5ce2bd24.js.map": "/cloud_control/static/js/main.5ce2bd24.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.64b217e3.css",
+    "static/js/main.5ce2bd24.js"
+  ]
+}
