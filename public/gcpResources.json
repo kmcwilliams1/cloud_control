@@ -1,0 +1,94 @@
+{
+  "categories": [
+    {
+      "name": "Compute",
+      "services": [
+        "Compute Engine",
+        "Google Kubernetes Engine (GKE)",
+        "Cloud Run",
+        "App Engine",
+        "Cloud Functions",
+        "Cloud Batch",
+        "Cloud TPUs"
+      ]
+    },
+    {
+      "name": "Storage",
+      "services": [
+        "Cloud Storage",
+        "Persistent Disk",
+        "Filestore",
+        "Cloud Storage for Firebase"
+      ]
+    },
+    {
+      "name": "Databases",
+      "services": [
+        "Cloud SQL",
+        "AlloyDB for PostgreSQL",
+        "Cloud Spanner",
+        "Firestore",
+        "Cloud Bigtable",
+        "Memorystore"
+      ]
+    },
+    {
+      "name": "Networking",
+      "services": [
+        "Virtual Private Cloud (VPC)",
+        "Cloud Load Balancing",
+        "Cloud CDN",
+        "Cloud Interconnect",
+        "Cloud VPN",
+        "Cloud DNS",
+        "Cloud Armor",
+        "Cloud NAT"
+      ]
+    },
+    {
+      "name": "Security, Identity, & Compliance",
+      "services": [
+        "Cloud Identity and Access Management (IAM)",
+        "Secret Manager",
+        "Security Command Center",
+        "Cloud Key Management Service (Cloud KMS)",
+        "VPC Service Controls",
+        "Identity-Aware Proxy (IAP)",
+        "Cloud Audit Logs",
+        "Certificate Manager"
+      ]
+    },
+    {
+      "name": "Management & Tools",
+      "services": [
+        "Cloud Monitoring",
+        "Cloud Logging",
+        "Cloud Deployment Manager",
+        "Cloud Shell",
+        "Cloud Build",
+        "Artifact Registry",
+        "Cloud Console"
+      ]
+    },
+    {
+      "name": "AI & Machine Learning",
+      "services": [
+        "Vertex AI",
+        "Gemini (via Vertex AI)",
+        "Vision AI",
+        "Natural Language AI",
+        "Translation AI"
+      ]
+    },
+    {
+      "name": "Data Analytics",
+      "services": [
+        "BigQuery",
+        "Dataflow",
+        "Cloud Pub/Sub",
+        "Cloud Dataproc",
+        "Looker"
+      ]
+    }
+  ]
+}

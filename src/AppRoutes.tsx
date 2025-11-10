@@ -6,6 +6,7 @@ import Signup from './pages/Signup';
 import MFA from './pages/MFA';
 import ForgotPassword from './pages/ForgotPassword';
 import HomeRouter from './pages/HomeRouter';
+import Account from "./pages/Account";
 
 const AppRoutes: React.FC = () => {
     return (
@@ -16,6 +17,8 @@ const AppRoutes: React.FC = () => {
             <Route path="/home" element={<HomeRouter />} />
             <Route path="/mfa" element={<MFA />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/account" element={<Account />} />
+
         </Routes>
     );
 };

@@ -133,7 +133,7 @@ body { background: var(--bg); color: var(--text); margin: 0; }
   background: var(--bg);
   min-height: 100vh;
   padding: 28px;
-  font-family: var(--font, "Helvetica Neue", Arial, sans-serif);
+    font-family: var(--font, "Helvetica Neue", Arial, sans-serif), serif;
   color: var(--text);
 }
 
@@ -166,3 +166,41 @@ body { background: var(--bg); color: var(--text); margin: 0; }
     .provider-title { font-size: 28px; }
     .manifest-item { width: 26%; min-width: 140px; }
 }
+
+:root{
+  /* existing vars... */
+  --settings-size: 44px;
+}
+
+
+.settings-icon:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.16); }
+.settings-icon:active { transform: translateY(0); }
+
+
+
+:root{
+  /* existing vars... */
+  --settings-size: 44px;
+}
+
+/* settings icon in top-right */
+.settings-icon {
+  position: fixed;
+  top: 18px;
+  right: 20px;
+  width: var(--settings-size);
+  height: var(--settings-size);
+  display: inline-grid;
+  place-items: center;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  z-index: 1200;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.settings-icon:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.16); }
+.settings-icon:active { transform: translateY(0); }
+
+/* small visual tweak for SVG inside */

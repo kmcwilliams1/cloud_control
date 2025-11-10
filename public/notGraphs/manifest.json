@@ -12,14 +12,16 @@
     "file": "Screenshot (44).png",
     "type": "image",
     "provider": "gcp",
-    "folder": "notGraphs"
+    "folder": "notGraphs",
+    "roles": ["admin"]
   },
   {
     "name": "IMG_01",
     "file": "Screenshot (45)1.png",
     "type": "image",
     "provider": "gcp",
-    "folder": "notGraphs"
+    "folder": "notGraphs",
+    "roles": ["admin"]
   },
   {
     "name": "IMG_02",
@@ -33,6 +35,7 @@
     "file": "vid_01.mp4",
     "type": "video",
     "provider": "gcp",
-    "folder": "notGraphs"
+    "folder": "notGraphs",
+    "roles": ["admin"]
   }
 ]
