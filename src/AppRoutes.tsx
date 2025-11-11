@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {JSX} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
@@ -8,7 +8,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import HomeRouter from './pages/HomeRouter';
 import Account from "./pages/Account";
 
-const AppRoutes: React.FC = () => {
+export default function AppRoutes(): JSX.Element {
     return (
         <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -18,9 +18,6 @@ const AppRoutes: React.FC = () => {
             <Route path="/mfa" element={<MFA />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/account" element={<Account />} />
-
         </Routes>
     );
-};
-
-export default AppRoutes;
+}

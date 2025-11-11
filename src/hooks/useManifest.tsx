@@ -1,106 +1,153 @@
-// File: `src/hooks/useManifest.tsx`
-import { useEffect, useState } from 'react';
+// typescript
+      // File: `src/hooks/useManifest.tsx`
+      import { useEffect, useRef, useState } from 'react';
 
-export type ManifestItem = {
-  folder: string;
-  file: string;
-  name: string;
-  type?: 'image' | 'video' | 'text' | string;
-  provider?: string;
-  [key: string]: any;
-};
+      export type ManifestItem = {
+          provider?: string;
+          folder?: string;
+          file?: string;
+          name?: string;
+          roles?: string[] | any[];
+          access?: string;
+          [k: string]: any;
+      };
 
-function normalizeEntry(entry: any, defaultFolder = ''): ManifestItem | null {
-  if (entry == null) return null;
-  // entry can be a string filename or an object
-  if (typeof entry === 'string') {
-    const file = entry;
-    const name = file.replace(/\.[^.]+$/, '').toUpperCase();
-    return { folder: defaultFolder, file, name };
-  }
-  if (typeof entry === 'object' && entry.file) {
-    return {
-      folder: entry.folder ?? defaultFolder,
-      file: entry.file,
-      name: entry.name ?? String(entry.file),
-      type: entry.type,
-      provider: entry.provider,
-      ...entry,
-    };
-  }
-  return null;
-}
+      type CacheEntry = {
+          items: ManifestItem[] | null;
+          promise?: Promise<ManifestItem[]>;
+          timestamp: number;
+      };
 
-export function useManifest(manifestPath: string | string[] = '/manifest.json') {
-  const [items, setItems] = useState<ManifestItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+      const cache = new Map<string, CacheEntry>();
 
-  useEffect(() => {
-    let cancelled = false;
-    setLoading(false);
-    setError(null);
+      const makeKey = (paths: string[]) => paths.map((p) => p || '').join('|');
 
-    const paths = Array.isArray(manifestPath) ? manifestPath : [manifestPath];
+      export function useManifest(paths: string[]): {
+          items: ManifestItem[];
+          loading: boolean;
+          error: string | null;
+          refetch: () => void;
+      } {
+          const base = process.env.PUBLIC_URL || '';
+          const key = makeKey(paths);
+          const mounted = useRef(true);
 
-    Promise.all(
-      paths.map((p) =>
-        fetch(p)
-          .then((r) => (r.ok ? r.json() : null))
-          .catch(() => null)
-      )
-    )
-      .then((rawResults: (unknown | null)[]) => {
-        if (cancelled) return;
+          const [items, setItems] = useState<ManifestItem[]>(() => {
+              const entry = cache.get(key);
+              return entry && entry.items ? entry.items : [];
+          });
+          const [loading, setLoading] = useState<boolean>(() => {
+              const entry = cache.get(key);
+              return !entry || !entry.items;
+          });
+          const [error, setError] = useState<string | null>(null);
 
-        // flatten arrays/objects from each manifest file
-        const allEntries: unknown[] = rawResults.flatMap((raw, idx) => {
-          // raw might be an array or an object with `items`
-          const obj = raw as unknown;
-          if (Array.isArray(obj)) return obj;
-          if (obj && typeof obj === 'object' && (obj as any).items && Array.isArray((obj as any).items)) {
-            return (obj as any).items;
-          }
-          // also support object that contains top-level entries keyed by folder
-          if (obj && typeof obj === 'object') {
-            // attempt to extract values that look like items
-            return Object.values(obj).flatMap((v) => (Array.isArray(v) ? v : []));
-          }
-          return [];
-        });
+          const load = async (force = false) => {
+              if (!paths || paths.length === 0) {
+                  setItems([]);
+                  setLoading(false);
+                  setError(null);
+                  return;
+              }
 
-        const normalized = (allEntries as any[])
-          .map((e) => {
-            // try to infer folder from path if entry is string like "folder/file.png"
-            if (typeof e === 'string') {
-              const parts = e.split('/');
-              const file = parts.pop() || e;
-              const folder = parts.join('/') || '';
-              return normalizeEntry(file, folder);
-            }
-            // object entry may include a folder property; use empty string as default
-            return normalizeEntry(e, '');
-          })
-          .filter((x): x is ManifestItem => x !== null)
-          .sort((a: ManifestItem, b: ManifestItem) =>
-            a.folder !== b.folder ? a.folder.localeCompare(b.folder) : a.name.localeCompare(b.name)
-          );
+              const existing = cache.get(key);
+              if (existing && existing.items && !force) {
+                  setItems(existing.items);
+                  setLoading(false);
+                  setError(null);
+                  return;
+              }
 
-        setItems(normalized);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        setError(String(err || 'Failed to load manifest(s)'));
-        setLoading(false);
-      });
+              // reuse in-flight promise when available
+              if (existing && existing.promise && !force) {
+                  setLoading(true);
+                  setError(null);
+                  try {
+                      const result = await existing.promise;
+                      if (!mounted.current) return;
+                      setItems(result);
+                      setLoading(false);
+                  } catch (e: any) {
+                      if (!mounted.current) return;
+                      setError(e?.message || 'Error loading manifest');
+                      setLoading(false);
+                  }
+                  return;
+              }
 
-    return () => {
-      cancelled = true;
-    };
-  }, [manifestPath]);
+              // create a fresh promise for dedupe. Do NOT attach a shared AbortController here
+              const promise = (async () => {
+                  try {
+                      const fetches = paths.map(async (p) => {
+                          const path = p.startsWith('/') ? `${base}${p}` : `${base}/${p}`;
+                          const res = await fetch(path, { cache: 'default' });
+                          const text = await res.text();
+                          const ct = (res.headers.get('content-type') || '').toLowerCase();
 
-  return { items, loading, error };
-}
+                          if (!res.ok) {
+                              throw new Error(`Failed to load manifest (${res.status}) from ${path}. Response snippet: ${text.slice(0, 200)}`);
+                          }
 
-export default useManifest;
+                          if (ct.includes('html') || text.trim().startsWith('<')) {
+                              throw new Error(`Invalid JSON from ${path}: response appears to be HTML. Response snippet: ${text.slice(0, 200)}`);
+                          }
+
+                          try {
+                              const parsed = JSON.parse(text);
+                              if (Array.isArray(parsed)) return parsed as ManifestItem[];
+                              if (Array.isArray((parsed as any).items)) return (parsed as any).items as ManifestItem[];
+                              if (Array.isArray((parsed as any).manifest)) return (parsed as any).manifest as ManifestItem[];
+                              return Object.values(parsed).flat().filter(Boolean) as ManifestItem[];
+                          } catch (err) {
+                              throw new Error(`Invalid JSON from ${path}: ${(err as Error).message}. Response snippet: ${text.slice(0, 200)}`);
+                          }
+                      });
+
+                      const results = await Promise.all(fetches);
+                      const flattened = results.flat();
+                      cache.set(key, { items: flattened, promise: undefined, timestamp: Date.now() });
+                      return flattened;
+                  } catch (e) {
+                      // remove stale promise on error so future attempts can retry
+                      const cur = cache.get(key);
+                      if (cur && cur.promise) cache.delete(key);
+                      throw e;
+                  }
+              })();
+
+              // store promise to dedupe concurrent requests
+              cache.set(key, { items: null, promise, timestamp: Date.now() });
+
+              setLoading(true);
+              setError(null);
+
+              try {
+                  const result = await promise;
+                  if (!mounted.current) return;
+                  setItems(result);
+                  setLoading(false);
+              } catch (e: any) {
+                  if (!mounted.current) return;
+                  setError(e?.message || 'Error loading manifest');
+                  setLoading(false);
+              }
+          };
+
+          useEffect(() => {
+              mounted.current = true;
+              load(false);
+              return () => {
+                  // Do not abort the shared promise's network request here.
+                  // Just mark this hook instance as unmounted so results are ignored.
+                  mounted.current = false;
+              };
+              // key is a stable representation of paths
+          }, [key]);
+
+          const refetch = () => {
+              cache.delete(key);
+              load(true);
+          };
+
+          return { items, loading, error, refetch };
+      }

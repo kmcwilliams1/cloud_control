@@ -20,7 +20,7 @@ function parseCsv(text: string): Profile[] {
 
     // Take first non-empty line as candidate for header.
     let first = lines.shift()!;
-    const strippedCandidate = first.replace(/^[\/#\s]+/, '').trim(); // remove leading // or # if present
+    const strippedCandidate = first.replace(/^[/#\s]+/, '').trim(); // remove leading // or # if present
     const candidateCols = strippedCandidate.split(',').map((c) => c.trim().toLowerCase());
 
     // If candidate contains at least one known header token, treat it as header.
@@ -56,47 +56,54 @@ const Login: React.FC = () => {
     const navigate = useNavigate();
     const {setUser} = useAuth();
 
-    const checkCredentials = async (emailInput: string, passwordInput: string) => {
-        const url = `${window.location.origin}/profiles.csv`;
-        console.debug('checkCredentials - fetching url:', url);
-        const res = await fetch(url, {cache: 'no-store'});
-        if (!res.ok) {
-            console.error('checkCredentials - fetch failed with status', res.status);
-            throw new Error('Failed to load profiles');
-        }
-        const text = await res.text();
-        console.debug('checkCredentials - fetched text length:', text.length);
+   const checkCredentials = async (emailInput: string, passwordInput: string) => {
+       const url = `${process.env.PUBLIC_URL || ''}/profiles.csv`;
+       console.debug('checkCredentials - fetching url:', url);
+       const res = await fetch(url, { cache: 'no-store' });
+       if (!res.ok) {
+           console.error('checkCredentials - fetch failed with status', res.status);
+           throw new Error('Failed to load profiles');
+       }
+       const text = await res.text();
+       console.debug('checkCredentials - fetched text length:', text.length);
 
-        const profiles = parseCsv(text);
-        console.debug('checkCredentials - profiles length:', profiles.length);
+       // Detect HTML (index.html) being returned instead of CSV
+       const contentType = (res.headers.get('content-type') || '').toLowerCase();
+       if ((!contentType.includes('csv') && text.trim().startsWith('<')) || contentType.includes('html')) {
+           console.error('checkCredentials - fetched HTML instead of CSV, url:', url);
+           throw new Error('Profiles not found');
+       }
 
-        console.debug('checkCredentials - normalized inputs:', {
-            emailInput: emailInput.trim().toLowerCase(),
-            passwordInput: passwordInput,
-        });
+       const profiles = parseCsv(text);
+       console.debug('checkCredentials - profiles length:', profiles.length);
 
-        for (let i = 0; i < profiles.length; i++) {
-            const p = profiles[i];
-            const pEmail = (p.email ?? '').trim().toLowerCase();
-            const pPassword = p.password ?? '';
-            const emailMatch = pEmail === emailInput.trim().toLowerCase();
-            const passwordMatch = pPassword === passwordInput;
-            console.debug(`checkCredentials - profile[${i}]`, {
-                pEmail,
-                pPassword,
-                emailMatch,
-                passwordMatch,
-                role: p.role,
-            });
-            if (emailMatch && passwordMatch) {
-                console.debug('checkCredentials - match found at index', i, p);
-                return p;
-            }
-        }
+       console.debug('checkCredentials - normalized inputs:', {
+           emailInput: emailInput.trim().toLowerCase(),
+           passwordInput: passwordInput,
+       });
 
-        console.debug('checkCredentials - no match found');
-        return null;
-    };
+       for (let i = 0; i < profiles.length; i++) {
+           const p = profiles[i];
+           const pEmail = (p.email ?? '').trim().toLowerCase();
+           const pPassword = p.password ?? '';
+           const emailMatch = pEmail === emailInput.trim().toLowerCase();
+           const passwordMatch = pPassword === passwordInput;
+           console.debug(`checkCredentials - profile[${i}]`, {
+               pEmail,
+               pPassword,
+               emailMatch,
+               passwordMatch,
+               role: p.role,
+           });
+           if (emailMatch && passwordMatch) {
+               console.debug('checkCredentials - match found at index', i, p);
+               return p;
+           }
+       }
+
+       console.debug('checkCredentials - no match found');
+       return null;
+   };
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

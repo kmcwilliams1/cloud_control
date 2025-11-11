@@ -18,6 +18,7 @@ export default function Account(): JSX.Element {
     // disabled resources per group (Set of keys "provider::resourceName")
     const [disabledResourcesByGroup, setDisabledResourcesByGroup] = useState<Record<number, Set<string>>>({});
 
+
     useEffect(() => {
         if (!panelProvider) {
             setCategories(null);
@@ -36,22 +37,41 @@ export default function Account(): JSX.Element {
             microsoft: '/azureResources.json',
         };
 
-        const url = fileMap[key] || null;
-        if (!url) {
+        const urlPath = fileMap[key] || null;
+        if (!urlPath) {
             setCategories(null);
             setResError(`No resources file mapped for provider: ${panelProvider}`);
             return;
         }
 
+        const base = process.env.PUBLIC_URL || '';
+        const url = urlPath.startsWith('/') ? `${base}${urlPath}` : `${base}/${urlPath}`;
+
         setResLoading(true);
         setResError(null);
-        fetch(url)
-            .then((r) => {
-                if (!r.ok) throw new Error(`Failed to load services (${r.status})`);
-                return r.json();
+
+        fetch(url, { cache: 'no-store' })
+            .then(async (r) => {
+                const text = await r.text();
+                const ct = (r.headers.get('content-type') || '').toLowerCase();
+
+                if (!r.ok) {
+                    throw new Error(`Failed to load services (${r.status}) from ${url}. Response snippet: ${text.slice(0,200)}`);
+                }
+
+                // Detect HTML/index.html being returned instead of JSON
+                if (ct.includes('html') || text.trim().startsWith('<')) {
+                    throw new Error(`Invalid JSON from ${url}: response appears to be HTML. Response snippet: ${text.slice(0,200)}`);
+                }
+
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    throw new Error(`Invalid JSON from ${url}: ${(e as Error).message}. Response snippet: ${text.slice(0,200)}`);
+                }
             })
             .then((data) => {
-                setCategories(data.categories || []);
+                setCategories((data && (data as any).categories) || []);
                 setResLoading(false);
             })
             .catch((err) => {
@@ -59,6 +79,7 @@ export default function Account(): JSX.Element {
                 setResLoading(false);
             });
     }, [panelProvider]);
+
 
     const bg = '#f2f1ec'; // page background similar to screenshot
     const pink = '#e8c9c3';
